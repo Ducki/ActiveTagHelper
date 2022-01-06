@@ -1,11 +1,11 @@
 # ActiveTagHelper
 
-Adds `active` class to `<a>` element when it mirrors the current route.
+Adds `active` class to your links (like menu items, or `a` tags, but it actually works on every tag) based on whether its `asp-page`, `asp-controller` or `asp-action` matches the current URL.
 
 ## Compatibility
 Currently only tested on .NET 6.
 
-## Installing (doesn't work yet, because it hasn't been published to nuget :)
+## Installation
 1. Add a reference to the package from the cmd line:
     ```
     MyProject> dotnet add package ActiveTagHelper

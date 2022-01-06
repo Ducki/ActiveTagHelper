@@ -9,6 +9,10 @@
         <PackageId>ActiveTagHelper</PackageId>
         <Version>1.0.0</Version>
         <Authors>Alexander Wicht</Authors>
+        <RepositoryUrl>https://github.com/Ducki/ActiveTagHelper</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>aspnetcore taghelpers razor cshtml route css</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
