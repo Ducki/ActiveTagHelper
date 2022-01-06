@@ -3,7 +3,7 @@
 Adds `active` class to `<a>` element when it mirrors the current route.
 
 ## Compatibility
-Currently only tested on .NET 6. Just supports Razor Pages right now, adding Controllers and Actions in the next days.
+Currently only tested on .NET 6.
 
 ## Installing (doesn't work yet, because it hasn't been published to nuget :)
 1. Add a reference to the package from the cmd line:

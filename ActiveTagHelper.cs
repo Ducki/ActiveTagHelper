@@ -11,15 +11,15 @@ namespace ActiveTagHelper;
 [HtmlTargetElement(Attributes = "check-active")]
 public class ActiveTagHelper : TagHelper
 {
-    [ViewContext] private ViewContext Vc { get; set; } = null!;
+    [ViewContext] public ViewContext Vc { get; set; } = null!;
 
-    [HtmlAttributeName("asp-action")] private string Action { get; set; } = null!;
+    [HtmlAttributeName("asp-action")] public string Action { get; set; } = null!;
 
-    [HtmlAttributeName("asp-controller")] private string Controller { get; set; } = null!;
+    [HtmlAttributeName("asp-controller")] public string Controller { get; set; } = null!;
 
-    [HtmlAttributeName("asp-page")] private string Page { get; set; } = null!;
+    [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
 
-    private ActiveTagHelperOptions Options { get; set; }
+    public ActiveTagHelperOptions Options { get; set; }
 
 
     public ActiveTagHelper(IOptions<ActiveTagHelperOptions> options)
@@ -29,15 +29,46 @@ public class ActiveTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        
-        var routeValue = Vc.RouteData.Values["page"].ToString();
+        output.Attributes.RemoveAll("check-active");
 
-        if (routeValue.Equals(Page, StringComparison.OrdinalIgnoreCase))
+        var currentPage = "";
+        var currentController = "";
+        var currentAction = "";
+
+        if (Vc.RouteData.Values["page"] is not null)
+        {
+            currentPage = Vc.RouteData.Values["page"]?.ToString();
+        }
+        if (Vc.RouteData.Values["controller"] is not null)
+        {
+            currentController = Vc.RouteData.Values["controller"]?.ToString();
+        }
+        if (Vc.RouteData.Values["action"] is not null)
+        {
+            currentAction = Vc.RouteData.Values["action"]?.ToString();
+        }
+
+        bool isActive = false;
+
+        if ((currentPage is not null) && currentPage.Equals(Page, StringComparison.OrdinalIgnoreCase))
+        {
+            isActive = true;
+        }
+
+        if ((currentController is not null) && currentController.Equals(Controller, StringComparison.OrdinalIgnoreCase))
+        {
+            isActive = true;
+        }
+        if ((currentAction is not null) && currentAction.Equals(Action, StringComparison.OrdinalIgnoreCase))
+        {
+            isActive = true;
+        }
+
+        if (isActive)
         {
             output.AddClass("active", System.Text.Encodings.Web.HtmlEncoder.Default);
         }
 
-        output.Attributes.RemoveAll("check-active");
     }
 }
 
