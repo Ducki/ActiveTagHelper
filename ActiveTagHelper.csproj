@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/Ducki/ActiveTagHelper</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>aspnetcore taghelpers razor cshtml route css</PackageTags>
+        <PackageTags>aspnetcore taghelpers razor cshtml route css menu item items nav navigation navbar links link active class</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
