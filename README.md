@@ -2,6 +2,8 @@
 
 Adds `active` class to your links (like menu items, or `a` tags, but it actually works on every tag) based on whether its `asp-page`, `asp-controller` or `asp-action` matches the current URL.
 
+It's easy – just add a little attribute to your links. This is how:
+
 ## Compatibility
 Currently only tested on .NET 6.
 
@@ -18,8 +20,8 @@ Currently only tested on .NET 6.
     ```
    @addTagHelper *, ActiveTagHelper
     ```
-## Add `check-active` to your links
-Every link that should be checked for an `active` class needs to get the `check-active` attribute.
+## Add `check-active` attribute to your links
+Every link that should have its destination and current route compared needs to get the `check-active` attribute.
 
 ### Example
 
@@ -32,4 +34,6 @@ When the user is on the `Index` page, the code gets automatically changed to:
 <a class="active" asp-page="/Index">Index</a>
 <a asp-page="/Privacy">Privacy</a>
 ```
-If there are already classes defined, `active` just gets appended to the existing ones.
+If there are already classes defined, `active` just gets appended to the existing ones. The `check-active` attribute always gets removed.
+
+By the way, this works on every HTML element, not just `<a>`.
