@@ -19,12 +19,12 @@ public class ActiveTagHelper : TagHelper
 
     [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
 
-    public ActiveTagHelperOptions Options { get; set; }
+    private ActiveTagHelperOptions _options { get; set; }
 
 
     public ActiveTagHelper(IOptions<ActiveTagHelperOptions> options)
     {
-        this.Options = options.Value;
+        this._options = options.Value;
     }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -66,7 +66,7 @@ public class ActiveTagHelper : TagHelper
 
         if (isActive)
         {
-            output.AddClass("active", System.Text.Encodings.Web.HtmlEncoder.Default);
+            output.AddClass(_options.CssClass, System.Text.Encodings.Web.HtmlEncoder.Default);
         }
 
     }
@@ -74,8 +74,8 @@ public class ActiveTagHelper : TagHelper
 
 public static class UseExtension
 {
-    public static void MapActiveTagHelperOptions(this WebApplicationBuilder app, Action<ActiveTagHelperOptions> conf)
+    public static void MapActiveTagHelperClass(this WebApplicationBuilder app, Action<ActiveTagHelperOptions> options)
     {
-        app.Services.AddOptions<ActiveTagHelperOptions>().Configure(conf);
+        app.Services.AddOptions<ActiveTagHelperOptions>().Configure(options);
     }
 }
