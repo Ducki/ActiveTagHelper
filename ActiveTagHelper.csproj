@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-
+        <Description>Adds `active` class to `<a>` element when it mirrors the current route.</Description>
         <PackageId>ActiveTagHelper</PackageId>
         <Version>1.0.0</Version>
         <Authors>Alexander Wicht</Authors>
