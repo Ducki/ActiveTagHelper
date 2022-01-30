@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedType.Global
 
@@ -16,10 +17,10 @@ public class ActiveTagHelper : TagHelper
     [ViewContext] public ViewContext Vc { get; set; } = null!;
 
     [HtmlAttributeName("asp-action")] public string Action { get; set; } = null!;
-
     [HtmlAttributeName("asp-controller")] public string Controller { get; set; } = null!;
-
     [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
+    [HtmlAttributeName("class")] public string Class { get; set; } = null!;
+
 
     private readonly ActiveTagHelperOptions _options;
 
@@ -33,6 +34,23 @@ public class ActiveTagHelper : TagHelper
     {
         output.Attributes.RemoveAll("check-active");
 
+        var hasCssTrigger = HasCssTrigger();
+        var isActive = IsActive();
+
+        if (isActive)
+        {
+            output.AddClass(_options.CssClass, System.Text.Encodings.Web.HtmlEncoder.Default);
+        }
+    }
+
+    private bool HasCssTrigger()
+    {
+        var classes = Class.Split(' ');
+        return classes.Any(c => c.Equals(_options.TriggerClass));
+    }
+
+    private bool IsActive()
+    {
         var currentPage = "";
         var currentController = "";
         var currentAction = "";
@@ -41,10 +59,12 @@ public class ActiveTagHelper : TagHelper
         {
             currentPage = Vc.RouteData.Values["page"]?.ToString();
         }
+
         if (Vc.RouteData.Values["controller"] is not null)
         {
             currentController = Vc.RouteData.Values["controller"]?.ToString();
         }
+
         if (Vc.RouteData.Values["action"] is not null)
         {
             currentAction = Vc.RouteData.Values["action"]?.ToString();
@@ -61,16 +81,13 @@ public class ActiveTagHelper : TagHelper
         {
             isActive = true;
         }
+
         if ((currentAction is not null) && currentAction.Equals(Action, StringComparison.OrdinalIgnoreCase))
         {
             isActive = true;
         }
 
-        if (isActive)
-        {
-            output.AddClass(_options.CssClass, System.Text.Encodings.Web.HtmlEncoder.Default);
-        }
-
+        return isActive;
     }
 }
 

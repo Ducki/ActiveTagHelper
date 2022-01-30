@@ -5,4 +5,6 @@ public class ActiveTagHelperOptions
     /// Sets the css class for the tag. Default is 'active'.
     /// </summary>
     public string CssClass { get; set; } = "active";
+
+    public string? TriggerClass { get; set; } = string.Empty;
 }
