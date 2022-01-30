@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedType.Global
 
 namespace ActiveTagHelper;
 
@@ -19,12 +21,12 @@ public class ActiveTagHelper : TagHelper
 
     [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
 
-    private ActiveTagHelperOptions _options { get; set; }
+    private readonly ActiveTagHelperOptions _options;
 
 
     public ActiveTagHelper(IOptions<ActiveTagHelperOptions> options)
     {
-        this._options = options.Value;
+        _options = options.Value;
     }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
