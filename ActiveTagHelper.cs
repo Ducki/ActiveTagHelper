@@ -11,19 +11,17 @@ using Microsoft.Extensions.Options;
 
 namespace ActiveTagHelper;
 
-[HtmlTargetElement(Attributes = "check-active")]
+[HtmlTargetElement()]
 public class ActiveTagHelper : TagHelper
 {
     [ViewContext] public ViewContext Vc { get; set; } = null!;
-
     [HtmlAttributeName("asp-action")] public string Action { get; set; } = null!;
     [HtmlAttributeName("asp-controller")] public string Controller { get; set; } = null!;
     [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
     [HtmlAttributeName("class")] public string Class { get; set; } = null!;
-
+    [HtmlAttributeName("check-active")] public bool CheckActive { get; set; }
 
     private readonly ActiveTagHelperOptions _options;
-
 
     public ActiveTagHelper(IOptions<ActiveTagHelperOptions> options)
     {
@@ -32,12 +30,22 @@ public class ActiveTagHelper : TagHelper
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        output.Attributes.RemoveAll("check-active");
-
         var hasCssTrigger = HasCssTrigger();
-        var isActive = IsActive();
+        var hasCheckActiveAttribute = CheckActive;
 
-        if (isActive)
+        // Retain the previous CSS classes
+        try
+        {
+            output.CopyHtmlAttribute("class", context);
+        }
+        catch (Exception)
+        {
+            // Fail silently
+        }
+
+        if (!hasCssTrigger && !hasCheckActiveAttribute) return;
+
+        if (IsActive())
         {
             output.AddClass(_options.CssClass, System.Text.Encodings.Web.HtmlEncoder.Default);
         }
@@ -45,8 +53,8 @@ public class ActiveTagHelper : TagHelper
 
     private bool HasCssTrigger()
     {
-        var classes = Class.Split(' ');
-        return classes.Any(c => c.Equals(_options.TriggerClass));
+        var classes = Class?.Split(' ');
+        return classes?.Any(c => c.Equals(_options.TriggerClass)) ?? false;
     }
 
     private bool IsActive()
