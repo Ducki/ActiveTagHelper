@@ -7,7 +7,7 @@
         <IsPackable>true</IsPackable>
         <Description>Adds 'active' class to anchor element when it mirrors the current route.</Description>
         <PackageId>ActiveTagHelper</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.1.0</Version>
         <Authors>Alexander Wicht</Authors>
         <RepositoryUrl>https://github.com/Ducki/ActiveTagHelper</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

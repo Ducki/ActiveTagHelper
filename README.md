@@ -21,6 +21,9 @@ Currently only tested on .NET 6.
     ```
    @addTagHelper *, ActiveTagHelper
     ```
+
+To use it, you have two possibilities:
+
 ## Add `check-active` attribute to your links
 Every link that should have its destination and current route compared needs to get the `check-active` attribute.
 
@@ -39,8 +42,38 @@ If there are already classes defined, `active` just gets appended to the existin
 
 By the way, this works on every HTML element, not just `<a>`.
 
-## Optional: set custom class
-You can change the name of the CSS class by setting a custom class in your host builder setup. The tag exposes a `MapActiveTagHelperClass` method in the `WebApplicationBuilder` object.
+## Set custom trigger css class instead of `check-active` attribute
+You can also use a css class as a trigger. For example, here we use a class `nav-link`
+as a trigger class, because we already have it as a distinguishing feature of navigation links.
+Thus, we can leave out the `check-active` attribute and leverage that class.
+Set it up in your Program.cs where you create your builder:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
+
+builder.MapActiveTagHelperClass(o => o.TriggerClass = "nav-link"); // <- this is us!
+
+var app = builder.Build();
+// […]
+```
+### Example
+
+```razor
+<a class="nav-link" asp-page="/Index">Index</a>
+<a class="nav-link" asp-page="/Privacy">Privacy</a>
+```
+When the user is on the `Index` page, the code gets automatically changed to:
+```razor
+<a class="nav-link active" asp-page="/Index">Index</a>
+<a class="nav-link" asp-page="/Privacy">Privacy</a>
+```
+
+## Optional: set custom active class
+You can change the name of the active CSS class by setting
+a custom class in your host builder setup.
+The tag exposes a `MapActiveTagHelperClass` method
+in the `WebApplicationBuilder` object.
 
 For example:
 
@@ -53,3 +86,14 @@ builder.MapActiveTagHelperClass(o => o.CssClass = "my-custom-class"); // <-- thi
 var app = builder.Build();
 // […]
 ```
+
+
+### Changelog
+#### 1.0.0
+Initial
+
+#### 1.0.1
+Added support for custom css class
+
+#### 1.1.0
+Added possibility to have custom css class as trigger instead of attribute
