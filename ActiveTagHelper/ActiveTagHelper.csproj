@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+        <Description>Adds 'active' class to anchor element when it mirrors the current route.</Description>
+        <PackageId>ActiveTagHelper</PackageId>
+        <Title>ActiveTagHelper</Title>
+        <Version>1.1.0</Version>
+        <Authors>Alexander Wicht</Authors>
+        <RepositoryUrl>https://github.com/Ducki/ActiveTagHelper</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>aspnetcore taghelpers razor cshtml route css menu item items nav navigation navbar links link active class</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+</Project>
