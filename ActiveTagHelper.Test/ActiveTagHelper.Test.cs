@@ -155,6 +155,62 @@ public class ActiveTagHelperTest
             .FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "");
     }
 
+    [Fact]
+    public void Process_ShouldNotThrow_WhenNoClassAttributeExists()
+    {
+        // Arrange
+        var options = Options.Create(new ActiveTagHelperOptions());
+        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        {
+            Controller = "Home",
+            CheckActive = true
+        };
+
+        var routeData = new RouteData();
+        routeData.Values["controller"] = "Home";
+
+        tagHelper.Vc = new ViewContext { RouteData = routeData };
+
+        var context = MakeTagHelperContext(); // Kein class-Attribut
+        var output = MakeTagHelperOutput();
+
+        // Act
+        var exception = Record.Exception(() => tagHelper.Process(context, output));
+
+        // Assert
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void Process_ShouldPreserveExistingClasses_WhenClassAttributeExists()
+    {
+        // Arrange
+        var options = Options.Create(new ActiveTagHelperOptions());
+        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        {
+            Controller = "Home",
+            Class = "nav-link",
+            CheckActive = true
+        };
+
+        var routeData = new RouteData();
+        routeData.Values["controller"] = "Home";
+
+        tagHelper.Vc = new ViewContext { RouteData = routeData };
+
+        var attributes = new TagHelperAttributeList { { "class", "nav-link" } };
+        var context = MakeTagHelperContext(attributes);
+        var output = MakeTagHelperOutput(new TagHelperAttributeList(attributes));
+
+        // Act
+        tagHelper.Process(context, output);
+
+        // Assert
+        var classValue = output.Attributes.FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "";
+        Assert.Contains("nav-link", classValue);
+        Assert.Contains("active", classValue);
+    }
+
     private static TagHelperContext MakeTagHelperContext(TagHelperAttributeList? attributes = null)
     {
         attributes ??= new TagHelperAttributeList();

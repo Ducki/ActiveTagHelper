@@ -34,13 +34,9 @@ public class ActiveTagHelper : TagHelper
         var hasCheckActiveAttribute = CheckActive;
 
         // Retain the previous CSS classes
-        try
+        if (context.AllAttributes.ContainsName("class"))
         {
             output.CopyHtmlAttribute("class", context);
-        }
-        catch (Exception)
-        {
-            // Fail silently
         }
 
         if (!hasCssTrigger && !hasCheckActiveAttribute) return;
