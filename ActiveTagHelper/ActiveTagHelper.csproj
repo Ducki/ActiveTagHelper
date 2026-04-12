@@ -5,10 +5,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-        <Description>Adds 'active' class to anchor element when it mirrors the current route.</Description>
+        <Description>Adds an 'active' CSS class to any HTML element when its asp-page, asp-controller or asp-action matches the current route. Supports MVC and Razor Pages.</Description>
         <PackageId>ActiveTagHelper</PackageId>
         <Title>ActiveTagHelper</Title>
-        <Version>1.1.0</Version>
+        <Version>2.0.0</Version>
         <Authors>Alexander Wicht</Authors>
         <RepositoryUrl>https://github.com/Ducki/ActiveTagHelper</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

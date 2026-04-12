@@ -11,7 +11,7 @@ public class ActiveTagHelperTest
         var options = Options.Create(new ActiveTagHelperOptions());
 
         // Act
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options);
+        var tagHelper = new ActiveTagHelper(options);
 
         // Assert
         Assert.NotNull(tagHelper);
@@ -22,15 +22,20 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions { TriggerClass = "nav-link" });
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             // Action, Controller, Page bleiben null (nicht gesetzt)
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
-        routeData.Values["action"] = "Index";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home",
+                ["action"] = "Index"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -49,16 +54,21 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Controller = "Home",
             Action = "About",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
-        routeData.Values["action"] = "Index"; // Action stimmt NICHT
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home",
+                ["action"] = "Index" // Action stimmt NICHT
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -69,8 +79,10 @@ public class ActiveTagHelperTest
         tagHelper.Process(context, output);
 
         // Assert
-        Assert.DoesNotContain("active", output.Attributes
-            .FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "");
+        Assert.DoesNotContain("active",
+            output.Attributes
+                .FirstOrDefault(a => a.Name == "class")?.Value?.ToString()
+            ?? "");
     }
 
     [Fact]
@@ -78,16 +90,21 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Controller = "Home",
             Action = "Index",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
-        routeData.Values["action"] = "Index";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home",
+                ["action"] = "Index"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -98,8 +115,10 @@ public class ActiveTagHelperTest
         tagHelper.Process(context, output);
 
         // Assert
-        Assert.Contains("active", output.Attributes
-            .FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "");
+        Assert.Contains("active",
+            output.Attributes
+                .FirstOrDefault(a => a.Name == "class")?.Value?.ToString()
+            ?? "");
     }
 
     [Fact]
@@ -107,15 +126,20 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Controller = "Home",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
-        routeData.Values["action"] = "Whatever";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home",
+                ["action"] = "Whatever"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -126,8 +150,10 @@ public class ActiveTagHelperTest
         tagHelper.Process(context, output);
 
         // Assert
-        Assert.Contains("active", output.Attributes
-            .FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "");
+        Assert.Contains("active",
+            output.Attributes
+                .FirstOrDefault(a => a.Name == "class")?.Value?.ToString()
+            ?? "");
     }
 
     [Fact]
@@ -135,14 +161,19 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Page = "/Index",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["page"] = "/Index";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["page"] = "/Index"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -153,8 +184,10 @@ public class ActiveTagHelperTest
         tagHelper.Process(context, output);
 
         // Assert
-        Assert.Contains("active", output.Attributes
-            .FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "");
+        Assert.Contains("active",
+            output.Attributes
+                .FirstOrDefault(a => a.Name == "class")?.Value?.ToString()
+            ?? "");
     }
 
     [Fact]
@@ -162,14 +195,19 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Controller = "Home",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -188,15 +226,20 @@ public class ActiveTagHelperTest
     {
         // Arrange
         var options = Options.Create(new ActiveTagHelperOptions());
-        var tagHelper = new global::ActiveTagHelper.ActiveTagHelper(options)
+        var tagHelper = new ActiveTagHelper(options)
         {
             Controller = "Home",
             Class = "nav-link",
             CheckActive = true
         };
 
-        var routeData = new RouteData();
-        routeData.Values["controller"] = "Home";
+        var routeData = new RouteData
+        {
+            Values =
+            {
+                ["controller"] = "Home"
+            }
+        };
 
         tagHelper.Vc = new ViewContext { RouteData = routeData };
 
@@ -217,7 +260,7 @@ public class ActiveTagHelperTest
     public void AddActiveTagHelper_ShouldRegisterOptions_WhenConfigured()
     {
         // Arrange
-        var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
+        var services = new ServiceCollection();
 
         // Act
         services.AddActiveTagHelper(opts =>
