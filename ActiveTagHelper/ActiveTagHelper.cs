@@ -59,43 +59,32 @@ public class ActiveTagHelper : TagHelper
 
     private bool IsActive()
     {
-        var currentPage = "";
-        var currentController = "";
-        var currentAction = "";
+        var currentPage = Vc.RouteData.Values["page"]?.ToString();
+        var currentController = Vc.RouteData.Values["controller"]?.ToString();
+        var currentAction = Vc.RouteData.Values["action"]?.ToString();
 
-        if (Vc.RouteData.Values["page"] is not null)
+        // Page-based routing (Razor Pages) — independent of Controller/Action
+        if (Page is not null)
         {
-            currentPage = Vc.RouteData.Values["page"]?.ToString();
+            return string.Equals(currentPage, Page, StringComparison.OrdinalIgnoreCase);
         }
 
-        if (Vc.RouteData.Values["controller"] is not null)
+        // Controller/Action-based routing (MVC)
+        var controllerMatches = Controller is null
+            || string.Equals(currentController, Controller, StringComparison.OrdinalIgnoreCase);
+
+        var actionMatches = Action is null
+            || string.Equals(currentAction, Action, StringComparison.OrdinalIgnoreCase);
+
+        // Both must be true. If only Controller is set, Action is null → actionMatches = true.
+        // If only Action is set, Controller is null → controllerMatches = true.
+        // If both are set, both must match. If neither is set, returns true (no filter).
+        if (Controller is not null || Action is not null)
         {
-            currentController = Vc.RouteData.Values["controller"]?.ToString();
+            return controllerMatches && actionMatches;
         }
 
-        if (Vc.RouteData.Values["action"] is not null)
-        {
-            currentAction = Vc.RouteData.Values["action"]?.ToString();
-        }
-
-        bool isActive = false;
-
-        if ((currentPage is not null) && currentPage.Equals(Page, StringComparison.OrdinalIgnoreCase))
-        {
-            isActive = true;
-        }
-
-        if ((currentController is not null) && currentController.Equals(Controller, StringComparison.OrdinalIgnoreCase))
-        {
-            isActive = true;
-        }
-
-        if ((currentAction is not null) && currentAction.Equals(Action, StringComparison.OrdinalIgnoreCase))
-        {
-            isActive = true;
-        }
-
-        return isActive;
+        return false;
     }
 }
 
