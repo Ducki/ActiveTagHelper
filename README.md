@@ -6,7 +6,7 @@ Adds `active` class to your links (like menu items, or `a` tags, but it actually
 It's easy – just add a little attribute to your links. This is how:
 
 ## Compatibility
-Currently only tested on .NET 6.
+Tested on .NET 10.
 
 ## Installation
 1. Add a reference to the package from the cmd line:

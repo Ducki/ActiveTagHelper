@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ActiveTagHelper.Test/ActiveTagHelper.Test.csproj" />
+  <Project Path="ActiveTagHelper/ActiveTagHelper.csproj" />
+</Solution>
