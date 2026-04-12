@@ -84,10 +84,11 @@ public class ActiveTagHelper : TagHelper
     }
 }
 
-public static class UseExtension
+public static class ActiveTagHelperServiceCollectionExtensions
 {
-    public static void MapActiveTagHelperClass(this WebApplicationBuilder app, Action<ActiveTagHelperOptions> options)
+    public static IServiceCollection AddActiveTagHelper(this IServiceCollection services, Action<ActiveTagHelperOptions> configure)
     {
-        app.Services.AddOptions<ActiveTagHelperOptions>().Configure(options);
+        services.AddOptions<ActiveTagHelperOptions>().Configure(configure);
+        return services;
     }
 }

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ActiveTagHelper.Test;
 
 public class ActiveTagHelperTest
@@ -209,6 +211,26 @@ public class ActiveTagHelperTest
         var classValue = output.Attributes.FirstOrDefault(a => a.Name == "class")?.Value?.ToString() ?? "";
         Assert.Contains("nav-link", classValue);
         Assert.Contains("active", classValue);
+    }
+
+    [Fact]
+    public void AddActiveTagHelper_ShouldRegisterOptions_WhenConfigured()
+    {
+        // Arrange
+        var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
+
+        // Act
+        services.AddActiveTagHelper(opts =>
+        {
+            opts.CssClass = "current";
+            opts.TriggerClass = "nav-link";
+        });
+
+        // Assert
+        var provider = services.BuildServiceProvider();
+        var options = provider.GetRequiredService<IOptions<ActiveTagHelperOptions>>();
+        Assert.Equal("current", options.Value.CssClass);
+        Assert.Equal("nav-link", options.Value.TriggerClass);
     }
 
     private static TagHelperContext MakeTagHelperContext(TagHelperAttributeList? attributes = null)
