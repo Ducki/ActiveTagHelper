@@ -15,9 +15,9 @@ namespace ActiveTagHelper;
 public class ActiveTagHelper : TagHelper
 {
     [ViewContext] public ViewContext Vc { get; set; } = null!;
-    [HtmlAttributeName("asp-action")] public string Action { get; set; } = null!;
-    [HtmlAttributeName("asp-controller")] public string Controller { get; set; } = null!;
-    [HtmlAttributeName("asp-page")] public string Page { get; set; } = null!;
+    [HtmlAttributeName("asp-action")] public string? Action { get; set; }
+    [HtmlAttributeName("asp-controller")] public string? Controller { get; set; }
+    [HtmlAttributeName("asp-page")] public string? Page { get; set; }
     [HtmlAttributeName("class")] public string Class { get; set; } = null!;
     [HtmlAttributeName("check-active")] public bool CheckActive { get; set; }
 
